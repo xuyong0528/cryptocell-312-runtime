@@ -21,6 +21,7 @@
 #include "dx_id_registers.h"
 #include "aes_driver.h"
 #include "prod_util.h"
+#include "cc_hal.h"
 
 
 // These are empty mutexs  - no mutexes are needed in production pahse
@@ -207,6 +208,11 @@ uint32_t  CCProd_Init(void)
 {
     uint32_t rc = CC_OK;
     uint32_t reg = 0, tempVal = 0;
+
+    rc = CC_HalInit();
+    if (rc != 0) {
+        return CC_PROD_INIT_ERR;
+    }
 
     rc = CC_PalInit();
     if (rc != 0) {
